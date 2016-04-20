@@ -14,6 +14,6 @@ trap 'int_handler' INT
 
 while :
 do
-    timeout 10 tail -n 0 --silent -f /onyma/ap/unis/logs/auth* 2>> /dev/null
+    timeout 10 tail -n 0 --silent -f ./testLog.txt 2>> /dev/null
     if $interupted ; then exit 1; fi
 done
