@@ -101,7 +101,7 @@ function line2obj($line){
         $fieldArray=split($fieldSeparator,$line);
         foreach($fieldArray as $propKeyVal) {
             $propArr=split($propertyKeyValSeparator,$propKeyVal);
-            if(count($propArr)>1){
+            if(count($propArr)>1 &&  !empty($propArr[0])){
                 //          property name          property value
                 $retObj->{$propArr[0]} = trim($propArr[1],'"');
             }
