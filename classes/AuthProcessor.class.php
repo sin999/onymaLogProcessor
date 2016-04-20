@@ -85,6 +85,7 @@ class AuthProcessor {
 	$key .= ".".$this->normStrIP($this->userIp4key($dialogue));	// 5 Client Ip  addres
 	$key .= ".".$this->normStrMAC($this->userMac4key($dialogue));	// 6 Client Mac
 	$key .= ".".$this->normStrCirquitId($this->cirquitId4key($dialogue));	// 7 Cirquit ID
+	$key .= ".".$this->normStr1($this->clientStationId4key($dialogue));	// 8 Client station ID (MAC if not void overwise IP)
 	return $key;	
     }
     
@@ -92,7 +93,7 @@ class AuthProcessor {
 	$str=base64_encode($str);
 	return $str;
     }
-    
+
     function normStrCirquitId($str){
 	$str=CirquitIdBuilder::makeObject($str);
 	$neName=isset($str->neName)?$str->neName:"unknown";
@@ -145,6 +146,10 @@ class AuthProcessor {
 	return $nas;
     }
 
+    function clientStationId4key($dialogue){
+	$mac=$this->userMac4key($dialogue);
+	return (isset($mac) && $mac!="unknown"?$mac:$this->userIp4key($dialogue));
+    }
 
     function userIp4key($dialogue){
 	$nas = (isset($dialogue->request)&& isset($dialogue->request->message) && isset($dialogue->request->message->{'framed-ip-addres'}))
